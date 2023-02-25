@@ -1,0 +1,16 @@
+{
+  "app_title": "Tic Tac Toe",
+  "home_page_welcome_message": "Hello",
+  "menu_settings": "Settings",
+  "game_player": "Player",
+  "game_computer": "Computer",
+  "game_draw": "It's a draw!",
+  "game_new": "New game",
+  "game_winner": "{0} wins!",
+  "settings_title": "Settings",
+  "settings_name": "Name",
+  "settings_fx": "Sounds FX",
+  "settings_music": "Music",
+  "settings_reset": "Delete progress",
+  "back": "Back"
+}

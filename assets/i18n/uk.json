@@ -1,0 +1,16 @@
+{
+  "app_title": "Хрестики-нолики",
+  "home_page_welcome_message": "Привіт",
+  "menu_settings": "Налаштування",
+  "game_player": "Гравець",
+  "game_computer": "Комп'ютер",
+  "game_draw": "Нічия!",
+  "game_new": "Нова гра",
+  "game_winner": "{0} переміг(ла)!",
+  "settings_title": "Налаштування",
+  "settings_name": "Ім'я",
+  "settings_fx": "Звукові Ефекти",
+  "settings_music": "Музика",
+  "settings_reset": "Видалити прогрес",
+  "back": "Назад"
+}
