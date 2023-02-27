@@ -4,7 +4,8 @@ import 'dart:typed_data';
 
 // import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
+// import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
+import 'package:go_router/go_router.dart';
 
 // import 'app_localizations.dart';
 import 'sound_manager.dart';
@@ -12,11 +13,11 @@ import 'tile.dart';
 import 'tile_state_enum.dart';
 
 class TicTacToeGame extends StatefulWidget {
-  final BluetoothDevice? server;
+  // final BluetoothDevice? server;
   final bool playLocal;
   static TileStateEnum currentPlayer = TileStateEnum.circle;
 
-  const TicTacToeGame({Key? key, this.server, this.playLocal = false})
+  const TicTacToeGame({Key? key, this.playLocal = false})
       : super(key: key);
 
   static GlobalKey<_TicTacToeGameState> gameStateKey =
@@ -34,7 +35,7 @@ class TicTacToeGame extends StatefulWidget {
 }
 
 class _TicTacToeGameState extends State<TicTacToeGame> {
-  BluetoothConnection? connection;
+  // BluetoothConnection? connection;
   bool connected = false;
   bool server = false;
   TileStateEnum currentPlayer = TileStateEnum.circle;
@@ -59,25 +60,25 @@ class _TicTacToeGameState extends State<TicTacToeGame> {
 
   @override
   void dispose() {
-    connection?.dispose();
+    // connection?.dispose();
     super.dispose();
   }
 
   Future<void> _connect() async {
     try {
-      BluetoothConnection? connection = await BluetoothConnection.toAddress(widget.server?.address);
+      // BluetoothConnection? connection = await BluetoothConnection.toAddress(widget.server?.address);
       print('Connected to the device');
       setState(() {
-        connection = connection;
+        // connection = connection;
         connected = true;
       });
-      connection?.input?.listen(_handleIncomingData).onDone(() {
-        print('Disconnected by remote request');
-        setState(() {
-          connection = null;
-          connected = false;
-        });
-      });
+      // connection?.input?.listen(_handleIncomingData).onDone(() {
+      //   print('Disconnected by remote request');
+      //   setState(() {
+      //     // connection = null;
+      //     connected = false;
+      //   });
+      // });
     } catch (ex) {
       print('Cannot connect, exception occurred');
       print(ex);
@@ -99,9 +100,9 @@ class _TicTacToeGameState extends State<TicTacToeGame> {
 
   Future<void> _sendMoveToOpponent(int row, int col, int tile) async {
     try {
-      connection?.output.add(Uint8List.fromList(
-          utf8.encode('$row,$col,$tile,${currentPlayer.index}\n')));
-      await connection?.output.allSent;
+      // connection?.output.add(Uint8List.fromList(
+      //     utf8.encode('$row,$col,$tile,${currentPlayer.index}\n')));
+      // await connection?.output.allSent;
     } catch (ex) {
       print('Cannot send data, exception occurred');
       print(ex);
@@ -238,13 +239,6 @@ class _TicTacToeGameState extends State<TicTacToeGame> {
       TileStateEnum.circle: const Icon(Icons.radio_button_unchecked, size: 60.0),
     };
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const BackButtonIcon(),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-        title: const Text('Tic Tac Toe'),
-      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -302,6 +296,18 @@ class _TicTacToeGameState extends State<TicTacToeGame> {
           ElevatedButton(
             onPressed: _resetGame,
             child: Text(('game_new')),
+          ),
+          const Spacer(),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: SizedBox(
+              width: double.infinity,
+              child: FilledButton(
+                // onPressed: () => {},
+                onPressed: () => GoRouter.of(context).go('/play'),
+                child: const Text('Back'),
+              ),
+            ),
           ),
         ],
       ),

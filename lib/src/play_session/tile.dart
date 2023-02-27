@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'tile_state_enum.dart';
 
 import 'tictactoe_game.dart';
+import 'tile_state_enum.dart';
 
 class Tile extends StatefulWidget {
   final Function() onPressed;

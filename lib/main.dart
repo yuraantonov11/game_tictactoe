@@ -148,7 +148,7 @@ class MyApp extends StatelessWidget {
                       final level = gameLevels
                           .singleWhere((e) => e.number == levelNumber);
                       return buildMyTransition<void>(
-                        child: TicTacToeScreen(
+                        child: PlaySessionScreen(
                           level,
                           key: const Key('play session'),
                         ),
