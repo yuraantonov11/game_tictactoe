@@ -328,10 +328,12 @@ class Board extends StatefulWidget {
 
 class _BoardState extends State<Board> {
   final List<List<Tile>> _board = [
-    [Tile(tileStateEnum: TileStateEnum.empty, onPressed: () {}), Tile(tileStateEnum: TileStateEnum.empty, onPressed: () {}), Tile(tileStateEnum: TileStateEnum.empty, onPressed: () {})],
-    [Tile(tileStateEnum: TileStateEnum.empty, onPressed: () {}), Tile(tileStateEnum: TileStateEnum.empty, onPressed: () {}), Tile(tileStateEnum: TileStateEnum.empty, onPressed: () {})],
-    [Tile(tileStateEnum: TileStateEnum.empty, onPressed: () {}), Tile(tileStateEnum: TileStateEnum.empty, onPressed: () {}), Tile(tileStateEnum: TileStateEnum.empty, onPressed: () {})],
+    [Tile(tileState: TileStateEnum.empty), Tile(tileState: TileStateEnum.empty), Tile(tileState: TileStateEnum.empty)],
+    [Tile(tileState: TileStateEnum.empty), Tile(tileState: TileStateEnum.empty), Tile(tileState: TileStateEnum.empty)],
+    [Tile(tileState: TileStateEnum.empty), Tile(tileState: TileStateEnum.empty), Tile(tileState: TileStateEnum.empty)],
   ];
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -365,7 +367,7 @@ class _BoardState extends State<Board> {
           decoration: BoxDecoration(
             border: Border.all(),
           ),
-          child: Center(child: Text(tile.tileStateEnum.value)),
+          child: Center(child: Text(tile.tileState.value)),
         ),
       ),
     );
