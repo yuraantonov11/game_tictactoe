@@ -6,8 +6,14 @@ class TileWidget extends StatelessWidget {
   final Tile tile;
   final VoidCallback onPressed;
 
-  const TileWidget({Key? key, required this.tile, required this.onPressed})
+  TileWidget({Key? key, required this.tile, required this.onPressed})
       : super(key: key);
+
+  final Map<TileStateEnum, Icon?> tileIcons = {
+    TileStateEnum.empty: null,
+    TileStateEnum.cross: const Icon(Icons.clear, size: 60.0),
+    TileStateEnum.circle: const Icon(Icons.radio_button_unchecked, size: 60.0),
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +35,8 @@ class TileWidget extends StatelessWidget {
           ],
         ),
         child: Text(
-          tile.tileState.value,
+          // tileIcons(tile.tileState.value),
+          '123',
           style: TextStyle(fontSize: 40),
         ),
       ),
