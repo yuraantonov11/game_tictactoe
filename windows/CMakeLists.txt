@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.14)
-project(game_template LANGUAGES CXX)
+project(ticktacktoe LANGUAGES CXX)
 
-set(BINARY_NAME "game_template")
+set(BINARY_NAME "ticktacktoe")
 
 cmake_policy(SET CMP0063 NEW)
 

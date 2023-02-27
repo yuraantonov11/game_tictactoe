@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:game_template/src/models/tic_tac_toe_game.dart';
-import 'package:game_template/src/play_session/tictactoe_game.dart';
-import 'package:game_template/src/ui/tile_widget.dart';
-import 'package:game_template/tile_widget.dart';
+import 'package:ticktacktoe/src/models/tic_tac_toe_game.dart';
+import 'package:ticktacktoe/src/models/tic_tac_toe_game.dart';
+import 'package:ticktacktoe/src/ui/tile_widget.dart';
+import 'package:ticktacktoe/tile_widget.dart';
 import 'package:provider/provider.dart';
 
 

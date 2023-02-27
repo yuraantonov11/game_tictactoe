@@ -1,4 +1,4 @@
-package com.example.game_template
+package com.example.ticktacktoe
 
 import io.flutter.embedding.android.FlutterActivity
 

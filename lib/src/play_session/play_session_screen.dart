@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:game_template/src/level_selection/levels.dart';
-import 'package:game_template/src/play_session/tictactoe_game.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
+import 'package:ticktacktoe/src/level_selection/levels.dart';
+import 'package:ticktacktoe/src/models/tic_tac_toe_game.dart';
 
 import '../audio/audio_controller.dart';
 import '../audio/sounds.dart';

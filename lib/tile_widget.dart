@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:game_template/src/play_session/tile.dart';
+import 'package:ticktacktoe/src/play_session/tile.dart';
+import 'package:ticktacktoe/src/play_session/tile_state_enum.dart';
 
 class TileWidget extends StatelessWidget {
   final Tile tile;
@@ -11,7 +12,7 @@ class TileWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: tile.tileState == TileState.empty ? onPressed : null,
+      onTap: tile.tileState == TileStateEnum.empty ? onPressed : null,
       child: Container(
         width: 80,
         height: 80,

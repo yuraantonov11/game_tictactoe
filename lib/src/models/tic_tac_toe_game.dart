@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 
+import '../play_session/tile_state_enum.dart';
+
 class TicTacToeGame extends StatefulWidget {
+  const TicTacToeGame({Key? key, required bool playLocal}) : super(key: key);
+
   @override
   _TicTacToeGameState createState() => _TicTacToeGameState();
 }
+
+
 
 class _TicTacToeGameState extends State<TicTacToeGame> {
   List<List<String>> board = [

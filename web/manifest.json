@@ -1,6 +1,6 @@
 {
-    "name": "game_template",
-    "short_name": "game_template",
+    "name": "ticktacktoe",
+    "short_name": "ticktacktoe",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
