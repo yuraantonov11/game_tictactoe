@@ -12,5 +12,10 @@
   "settings_fx": "Sounds FX",
   "settings_music": "Music",
   "settings_reset": "Delete progress",
-  "back": "Back"
+  "back": "Back",
+  "close": "Close",
+  "player": "Player",
+  "winner": "Winner",
+  "play": "Play",
+  "game_type": "Select Game Type"
 }

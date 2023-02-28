@@ -11,6 +11,8 @@ import '../game_internals/level_state.dart';
 import '../games_services/games_services.dart';
 import '../games_services/score.dart';
 import '../player_progress/player_progress.dart';
+import '../style/responsive_screen.dart';
+import 'app_localizations.dart';
 
 class PlaySessionScreen extends StatefulWidget {
   // final BluetoothDevice? server;
@@ -19,11 +21,7 @@ class PlaySessionScreen extends StatefulWidget {
   const PlaySessionScreen(this.level, {super.key});
 
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: TicTacToeGame(playLocal: false),
-      ),
-    );
+    return TicTacToeGame(playLocal: false);
   }
 
   @override
@@ -53,10 +51,17 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
         ),
       ],
       child: Scaffold(
-        body: SafeArea(
-          child: TicTacToeGame(playLocal: false),
+        body: ResponsiveScreen(
+          squarishMainArea: TicTacToeGame(playLocal: false),
+          rectangularMenuArea: FilledButton(
+            onPressed: () {
+              GoRouter.of(context).go('/');
+            },
+            child: Text(AppLocalizations.of(context).translate('back')),
+          ),
         ),
       ),
+
     );
   }
 

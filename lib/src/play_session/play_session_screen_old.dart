@@ -20,6 +20,7 @@ import '../level_selection/levels.dart';
 import '../player_progress/player_progress.dart';
 import '../style/confetti.dart';
 import '../style/palette.dart';
+import 'app_localizations.dart';
 
 class PlaySessionScreen extends StatefulWidget {
   final GameLevel level;
@@ -95,7 +96,7 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
                         width: double.infinity,
                         child: FilledButton(
                           onPressed: () => GoRouter.of(context).go('/play'),
-                          child: const Text('Back'),
+                          child: Text(AppLocalizations.of(context).translate('back')),
                         ),
                       ),
                     ),

@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 
 import '../audio/audio_controller.dart';
 import '../audio/sounds.dart';
+import '../play_session/app_localizations.dart';
 import '../player_progress/player_progress.dart';
 import '../style/palette.dart';
 import '../style/responsive_screen.dart';
@@ -26,11 +27,11 @@ class LevelSelectionScreen extends StatelessWidget {
       body: ResponsiveScreen(
         squarishMainArea: Column(
           children: [
-            const Padding(
+            Padding(
               padding: EdgeInsets.all(16),
               child: Center(
                 child: Text(
-                  'Select level',
+                  AppLocalizations.of(context).translate('game_type'),
                   style:
                       TextStyle(fontFamily: 'Permanent Marker', fontSize: 30),
                 ),
@@ -63,7 +64,7 @@ class LevelSelectionScreen extends StatelessWidget {
           onPressed: () {
             GoRouter.of(context).go('/');
           },
-          child: const Text('Back'),
+          child: Text(AppLocalizations.of(context).translate('back')),
         ),
       ),
     );
