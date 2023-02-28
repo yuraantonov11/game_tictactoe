@@ -11,6 +11,8 @@ import '../game_internals/level_state.dart';
 import '../games_services/games_services.dart';
 import '../games_services/score.dart';
 import '../player_progress/player_progress.dart';
+import '../style/confetti.dart';
+import '../style/palette.dart';
 import '../style/responsive_screen.dart';
 import 'app_localizations.dart';
 
@@ -41,6 +43,8 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    final palette = context.watch<Palette>();
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
@@ -50,18 +54,29 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
           ),
         ),
       ],
-      child: Scaffold(
-        body: ResponsiveScreen(
-          squarishMainArea: TicTacToeGame(playLocal: false),
-          rectangularMenuArea: FilledButton(
-            onPressed: () {
-              GoRouter.of(context).go('/');
-            },
-            child: Text(AppLocalizations.of(context).translate('back')),
-          ),
+      child: IgnorePointer(
+        ignoring: _duringCelebration,
+        child: Scaffold(
+          backgroundColor: palette.backgroundPlaySession,
+          body: Stack(
+            children: [
+              Center(
+                  child: TicTacToeGame(playLocal: false)
+              ),
+              SizedBox.expand(
+                child: Visibility(
+                  visible: _duringCelebration,
+                  child: IgnorePointer(
+                    child: Confetti(
+                      isStopped: !_duringCelebration,
+                    ),
+                  ),
+                ),
+              ),
+            ]
+          )
         ),
-      ),
-
+      )
     );
   }
 
