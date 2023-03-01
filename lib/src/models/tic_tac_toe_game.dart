@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:ticktacktoe/src/game_internals/game_state.dart';
 
 import '../audio/audio_controller.dart';
 import '../audio/sounds.dart';
@@ -7,7 +8,14 @@ import '../play_session/app_localizations.dart';
 import '../play_session/tile_state_enum.dart';
 
 class TicTacToeGame extends StatefulWidget {
-  const TicTacToeGame({Key? key, required bool playLocal}) : super(key: key);
+  final bool playLocal;
+  final ValueChanged<bool> onCelebrationStateChanged;
+
+  const TicTacToeGame({
+    Key? key,
+    required this.playLocal,
+    required this.onCelebrationStateChanged,
+  }) : super(key: key);
 
   @override
   _TicTacToeGameState createState() => _TicTacToeGameState();
@@ -15,44 +23,59 @@ class TicTacToeGame extends StatefulWidget {
 
 class _TicTacToeGameState extends State<TicTacToeGame> {
   late AudioController audioController;
-  List<List<TileStateEnum>> board = List.generate(
-      3, (i) => List.filled(3, TileStateEnum.empty));
 
-  TileStateEnum currentPlayer = TileStateEnum.cross;
-  TileStateEnum winner = TileStateEnum.empty;
+  late List<List<TileStateEnum>> board;
+  // TileStateEnum currentPlayer = TileStateEnum.cross;
+  // TileStateEnum winner = TileStateEnum.empty;
+  late GameState gameState;
 
-  void playAt(int row, int col) {
-    audioController.playSfx(SfxType.buttonTap);
-    if (board[row][col] == TileStateEnum.empty) {
-      setState(() {
-        board[row][col] = currentPlayer;
-        if (currentPlayer == TileStateEnum.cross) {
-          currentPlayer = TileStateEnum.circle;
-        } else {
-          currentPlayer = TileStateEnum.cross;
-        }
-        winner = checkWinner();
-      });
-    }
+  @override
+  void initState() {
+    super.initState();
+    gameState = GameState(
+      onGameOver: () {
+        widget.onCelebrationStateChanged(true);
+      },
+      board: board
+    );
   }
 
-  TileStateEnum checkWinner() {
-    for (var i = 0; i < 3; i++) {
-      if (board[i][0] == board[i][1] && board[i][1] == board[i][2] && board[i][0] != '') {
-        return board[i][0];
-      }
-      if (board[0][i] == board[1][i] && board[1][i] == board[2][i] && board[0][i] != '') {
-        return board[0][i];
-      }
-    }
-    if (board[0][0] == board[1][1] && board[1][1] == board[2][2] && board[0][0] != '') {
-      return board[0][0];
-    }
-    if (board[2][0] == board[1][1] && board[1][1] == board[0][2] && board[2][0] != '') {
-      return board[2][0];
-    }
-    return TileStateEnum.empty;
-  }
+  // void playAt(int row, int col) {
+  //   audioController.playSfx(SfxType.buttonTap);
+  //   if (board[row][col] == TileStateEnum.empty) {
+  //     setState(() {
+  //       board[row][col] = currentPlayer;
+  //       if (currentPlayer == TileStateEnum.cross) {
+  //         currentPlayer = TileStateEnum.circle;
+  //       } else {
+  //         currentPlayer = TileStateEnum.cross;
+  //       }
+  //       winner = checkWinner();
+  //     });
+  //   }
+  // }
+
+  // TileStateEnum checkWinner() {
+  //   for (var i = 0; i < 3; i++) {
+  //     if (board[i][0] == board[i][1] && board[i][1] == board[i][2] && board[i][0] != TileStateEnum.empty) {
+  //       widget.onCelebrationStateChanged(true);
+  //       return board[i][0];
+  //     }
+  //     if (board[0][i] == board[1][i] && board[1][i] == board[2][i] && board[0][i] != TileStateEnum.empty) {
+  //       widget.onCelebrationStateChanged(true);
+  //       return board[0][i];
+  //     }
+  //   }
+  //   if (board[0][0] == board[1][1] && board[1][1] == board[2][2] && board[0][0] != TileStateEnum.empty) {
+  //     widget.onCelebrationStateChanged(true);
+  //     return board[0][0];
+  //   }
+  //   if (board[2][0] == board[1][1] && board[1][1] == board[0][2] && board[2][0] != TileStateEnum.empty) {
+  //     widget.onCelebrationStateChanged(true);
+  //     return board[2][0];
+  //   }
+  //   return TileStateEnum.empty;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +95,7 @@ class _TicTacToeGameState extends State<TicTacToeGame> {
             style: TextStyle(fontSize: 24),
           ),
           Center(
-            child: tileIcons[currentPlayer],
+            child: tileIcons[gameState.currentPlayer],
           ),
           Expanded(
             child: Container(
@@ -88,11 +111,11 @@ class _TicTacToeGameState extends State<TicTacToeGame> {
                 ),
                 padding: EdgeInsets.all(8.0),
                 physics: NeverScrollableScrollPhysics(),
-                itemBuilder: (BuildContext context, int index) {
+                itemBuilder: (context, index) {
                   int row = (index / 3).floor();
                   int col = index % 3;
                   return GestureDetector(
-                    onTap: () => playAt(row, col),
+                    onTap: () => gameState.playAt(row, col),
                     child: Container(
                       decoration: BoxDecoration(
                         border: Border.all(color: Colors.black),
@@ -111,10 +134,11 @@ class _TicTacToeGameState extends State<TicTacToeGame> {
                     ),
                   );
                 },
+
               ),
             ),
           ),
-          if (winner != TileStateEnum.empty)
+          if (gameState.getWinner() != TileStateEnum.empty)
             Column(
               children: [
                 Text(
@@ -122,7 +146,7 @@ class _TicTacToeGameState extends State<TicTacToeGame> {
                   style: TextStyle(fontSize: 24),
                 ),
                 Icon(
-                  tileIcons[winner]?.icon,
+                  tileIcons[gameState.getWinner()]?.icon,
                   size: 60,
                 ),
               ],
@@ -130,7 +154,5 @@ class _TicTacToeGameState extends State<TicTacToeGame> {
         ],
       ),
     );
-
-
   }
 }

@@ -7,7 +7,7 @@ import 'package:ticktacktoe/src/models/tic_tac_toe_game.dart';
 
 import '../audio/audio_controller.dart';
 import '../audio/sounds.dart';
-import '../game_internals/level_state.dart';
+import '../game_internals/game_state.dart';
 import '../games_services/games_services.dart';
 import '../games_services/score.dart';
 import '../player_progress/player_progress.dart';
@@ -21,10 +21,6 @@ class PlaySessionScreen extends StatefulWidget {
   final GameLevel level;
 
   const PlaySessionScreen(this.level, {super.key});
-
-  Widget build(BuildContext context) {
-    return TicTacToeGame(playLocal: false);
-  }
 
   @override
   State<PlaySessionScreen> createState() => _PlaySessionScreenState();
@@ -42,41 +38,53 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
   late DateTime _startOfPlay;
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
+    _startOfPlay = DateTime.now();
+  }
 
+  void celebrationStateChange(bool value) {
+    setState(() {
+      _duringCelebration = value;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final palette = context.watch<Palette>();
     return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (context) => LevelState(
-            goal: widget.level.difficulty,
-            onWin: _playerWon,
+        providers: [
+          ChangeNotifierProvider(
+            create: (context) => GameState(
+              onGameOver: _playerWon,
+              board: []
+            ),
           ),
-        ),
-      ],
-      child: IgnorePointer(
-        ignoring: _duringCelebration,
-        child: Scaffold(
-          backgroundColor: palette.backgroundPlaySession,
-          body: Stack(
-            children: [
-              Center(
-                  child: TicTacToeGame(playLocal: false)
-              ),
-              SizedBox.expand(
-                child: Visibility(
-                  visible: _duringCelebration,
-                  child: IgnorePointer(
-                    child: Confetti(
-                      isStopped: !_duringCelebration,
+        ],
+        child: IgnorePointer(
+          ignoring: _duringCelebration,
+          child: Scaffold(
+              backgroundColor: palette.backgroundPlaySession,
+              body: Stack(
+                  children: [
+                    Center(
+                        child: TicTacToeGame(
+                            onCelebrationStateChanged: celebrationStateChange, playLocal: true,)
                     ),
-                  ),
-                ),
-              ),
-            ]
-          )
-        ),
-      )
+                    SizedBox.expand(
+                      child: Visibility(
+                        visible: _duringCelebration,
+                        child: IgnorePointer(
+                          child: Confetti(
+                            isStopped: !_duringCelebration,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ]
+              )
+          ),
+        )
     );
   }
 

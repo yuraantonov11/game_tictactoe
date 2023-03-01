@@ -2,6 +2,7 @@ enum TileStateEnum {
   empty,
   cross,
   circle,
+  none
 }
 
 extension TileStateEnumExtension on TileStateEnum {
