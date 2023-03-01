@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:ticktacktoe/src/game_internals/game_state.dart';
 
 import '../audio/audio_controller.dart';
-import '../audio/sounds.dart';
+// import '../audio/sounds.dart';
 import '../play_session/app_localizations.dart';
 import '../play_session/tile_state_enum.dart';
 
@@ -25,8 +25,6 @@ class _TicTacToeGameState extends State<TicTacToeGame> {
   late AudioController audioController;
 
   late List<List<TileStateEnum>> board;
-  // TileStateEnum currentPlayer = TileStateEnum.cross;
-  // TileStateEnum winner = TileStateEnum.empty;
   late GameState gameState;
 
   @override
@@ -36,8 +34,8 @@ class _TicTacToeGameState extends State<TicTacToeGame> {
       onGameOver: () {
         widget.onCelebrationStateChanged(true);
       },
-      board: board
     );
+    board = gameState.board;
   }
 
   // void playAt(int row, int col) {
@@ -115,7 +113,12 @@ class _TicTacToeGameState extends State<TicTacToeGame> {
                   int row = (index / 3).floor();
                   int col = index % 3;
                   return GestureDetector(
-                    onTap: () => gameState.playAt(row, col),
+                    onTap: () {
+                      gameState.playAt(row, col);
+                      setState(() {
+                        board = gameState.board;
+                      });
+                    },
                     child: Container(
                       decoration: BoxDecoration(
                         border: Border.all(color: Colors.black),
@@ -134,7 +137,6 @@ class _TicTacToeGameState extends State<TicTacToeGame> {
                     ),
                   );
                 },
-
               ),
             ),
           ),

@@ -13,8 +13,8 @@ import '../games_services/score.dart';
 import '../player_progress/player_progress.dart';
 import '../style/confetti.dart';
 import '../style/palette.dart';
-import '../style/responsive_screen.dart';
-import 'app_localizations.dart';
+// import '../style/responsive_screen.dart';
+// import 'app_localizations.dart';
 
 class PlaySessionScreen extends StatefulWidget {
   // final BluetoothDevice? server;
@@ -53,38 +53,37 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
   Widget build(BuildContext context) {
     final palette = context.watch<Palette>();
     return MultiProvider(
-        providers: [
-          ChangeNotifierProvider(
-            create: (context) => GameState(
-              onGameOver: _playerWon,
-              board: []
-            ),
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => GameState(
+            onGameOver: _playerWon,
           ),
-        ],
-        child: IgnorePointer(
-          ignoring: _duringCelebration,
-          child: Scaffold(
-              backgroundColor: palette.backgroundPlaySession,
-              body: Stack(
-                  children: [
-                    Center(
-                        child: TicTacToeGame(
-                            onCelebrationStateChanged: celebrationStateChange, playLocal: true,)
+        ),
+      ],
+      child: IgnorePointer(
+        ignoring: _duringCelebration,
+        child: Scaffold(
+          backgroundColor: palette.backgroundPlaySession,
+          body: Stack(
+            children: [
+              Center(
+                child: TicTacToeGame(
+                    onCelebrationStateChanged: celebrationStateChange, playLocal: true,)
+              ),
+              SizedBox.expand(
+                child: Visibility(
+                  visible: _duringCelebration,
+                  child: IgnorePointer(
+                    child: Confetti(
+                      isStopped: !_duringCelebration,
                     ),
-                    SizedBox.expand(
-                      child: Visibility(
-                        visible: _duringCelebration,
-                        child: IgnorePointer(
-                          child: Confetti(
-                            isStopped: !_duringCelebration,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ]
-              )
-          ),
-        )
+                  ),
+                ),
+              ),
+            ]
+          )
+        ),
+      )
     );
   }
 

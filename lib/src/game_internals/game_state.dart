@@ -15,7 +15,7 @@ class GameState extends ChangeNotifier {
 
   TileStateEnum _currentPlayer = TileStateEnum.cross;
 
-  GameState({required this.onGameOver, required List<List<TileStateEnum>> board}) {
+  GameState({required this.onGameOver}) {
     board = List.generate(
       3,
           (i) => List.filled(3, TileStateEnum.empty),
