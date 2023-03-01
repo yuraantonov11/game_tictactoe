@@ -10,6 +10,7 @@ import '../ads/ads_controller.dart';
 import '../ads/banner_ad_widget.dart';
 import '../games_services/score.dart';
 import '../in_app_purchase/in_app_purchase.dart';
+import '../play_session/app_localizations.dart';
 import '../style/palette.dart';
 import '../style/responsive_screen.dart';
 
@@ -44,19 +45,19 @@ class WinGameScreen extends StatelessWidget {
               ),
             ],
             gap,
-            const Center(
+            Center(
               child: Text(
-                'You won!',
-                style: TextStyle(fontFamily: 'Permanent Marker', fontSize: 50),
+                '${AppLocalizations.of(context).translate('you_won')}!',
+                style: TextStyle(fontFamily: 'Pacifico', fontSize: 50),
               ),
             ),
             gap,
             Center(
               child: Text(
-                'Score: ${score.score}\n'
-                'Time: ${score.formattedTime}',
+                '${AppLocalizations.of(context).translate('score')}: ${score.score}\n'
+                '${AppLocalizations.of(context).translate('time')}: ${score.formattedTime}',
                 style: const TextStyle(
-                    fontFamily: 'Permanent Marker', fontSize: 20),
+                    fontFamily: 'Pacifico', fontSize: 20),
               ),
             ),
           ],
@@ -65,7 +66,7 @@ class WinGameScreen extends StatelessWidget {
           onPressed: () {
             GoRouter.of(context).go('/play');
           },
-          child: const Text('Continue'),
+          child: Text(AppLocalizations.of(context).translate('continue')),
         ),
       ),
     );

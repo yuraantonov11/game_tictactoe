@@ -10,11 +10,13 @@ import '../play_session/tile_state_enum.dart';
 class TicTacToeGame extends StatefulWidget {
   final bool playLocal;
   final ValueChanged<bool> onCelebrationStateChanged;
+  final VoidCallback onGameOver;
 
   const TicTacToeGame({
     Key? key,
     required this.playLocal,
     required this.onCelebrationStateChanged,
+    required this.onGameOver,
   }) : super(key: key);
 
   @override
@@ -31,9 +33,7 @@ class _TicTacToeGameState extends State<TicTacToeGame> {
   void initState() {
     super.initState();
     gameState = GameState(
-      onGameOver: () {
-        widget.onCelebrationStateChanged(true);
-      },
+      onGameOver: widget.onGameOver,
     );
     board = gameState.board;
   }
@@ -90,7 +90,11 @@ class _TicTacToeGameState extends State<TicTacToeGame> {
         children: [
           Text(
             '${AppLocalizations.of(context).translate('player')}:',
-            style: TextStyle(fontSize: 24),
+            style: TextStyle(
+              fontFamily: 'Pacifico',
+              fontSize: 30,
+              height: 1,
+            ),
           ),
           Center(
             child: tileIcons[gameState.currentPlayer],
@@ -145,7 +149,11 @@ class _TicTacToeGameState extends State<TicTacToeGame> {
               children: [
                 Text(
                   '${AppLocalizations.of(context).translate('winner')}:',
-                  style: TextStyle(fontSize: 24),
+                  style: TextStyle(
+                    fontFamily: 'Pacifico',
+                    fontSize: 30,
+                    height: 1,
+                  ),
                 ),
                 Icon(
                   tileIcons[gameState.getWinner()]?.icon,

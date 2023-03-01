@@ -37,6 +37,8 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
 
   late DateTime _startOfPlay;
 
+  late GameState gameState;
+
   @override
   void initState() {
     super.initState();
@@ -68,7 +70,10 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
             children: [
               Center(
                 child: TicTacToeGame(
-                    onCelebrationStateChanged: celebrationStateChange, playLocal: true,)
+                    onCelebrationStateChanged: celebrationStateChange,
+                  playLocal: true,
+                  onGameOver: _playerWon,
+                )
               ),
               SizedBox.expand(
                 child: Visibility(

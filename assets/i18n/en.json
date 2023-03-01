@@ -17,5 +17,9 @@
   "player": "Player",
   "winner": "Winner",
   "play": "Play",
+  "continue": "Continue",
+  "you_won": "You won",
+  "score": "Score",
+  "time": "Time",
   "game_type": "Select Game Type"
 }

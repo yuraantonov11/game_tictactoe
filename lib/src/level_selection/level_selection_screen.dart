@@ -33,7 +33,7 @@ class LevelSelectionScreen extends StatelessWidget {
                 child: Text(
                   AppLocalizations.of(context).translate('game_type'),
                   style:
-                      TextStyle(fontFamily: 'Permanent Marker', fontSize: 30),
+                      TextStyle(fontFamily: 'Pacifico', fontSize: 30),
                 ),
               ),
             ),
