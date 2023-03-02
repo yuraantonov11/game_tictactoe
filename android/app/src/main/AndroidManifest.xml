@@ -30,7 +30,7 @@
                    See README.txt for details. -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3940256099942544~3347511713"/>
+            android:value="ca-app-pub-4623852202301881~3810552182"/>
        <!-- Google Play Games -->
        <!-- Warning: Never include the Play Games app_id directly here.
                      It won't work. Use the XML file in res/values. -->

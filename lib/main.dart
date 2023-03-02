@@ -37,10 +37,6 @@ import 'src/style/snack_bar.dart';
 import 'src/win_game/win_game_screen.dart';
 
 Future<void> main() async {
-  // To enable Firebase Crashlytics, uncomment the following lines and
-  // the import statements at the top of this file.
-  // See the 'Crashlytics' section of the main README.md file for details.
-
   FirebaseCrashlytics? crashlytics;
   if (!kIsWeb && (Platform.isIOS || Platform.isAndroid)) {
     try {

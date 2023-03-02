@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:ticktacktoe/src/game_internals/game_state.dart';
 
+import '../ads/ads_controller.dart';
+import '../ads/banner_ad_widget.dart';
 import '../audio/audio_controller.dart';
 // import '../audio/sounds.dart';
+import '../in_app_purchase/in_app_purchase.dart';
 import '../play_session/app_localizations.dart';
 import '../play_session/tile_state_enum.dart';
+import '../style/responsive_screen.dart';
 
 class TicTacToeGame extends StatefulWidget {
   final bool playLocal;
@@ -38,46 +43,12 @@ class _TicTacToeGameState extends State<TicTacToeGame> {
     board = gameState.board;
   }
 
-  // void playAt(int row, int col) {
-  //   audioController.playSfx(SfxType.buttonTap);
-  //   if (board[row][col] == TileStateEnum.empty) {
-  //     setState(() {
-  //       board[row][col] = currentPlayer;
-  //       if (currentPlayer == TileStateEnum.cross) {
-  //         currentPlayer = TileStateEnum.circle;
-  //       } else {
-  //         currentPlayer = TileStateEnum.cross;
-  //       }
-  //       winner = checkWinner();
-  //     });
-  //   }
-  // }
-
-  // TileStateEnum checkWinner() {
-  //   for (var i = 0; i < 3; i++) {
-  //     if (board[i][0] == board[i][1] && board[i][1] == board[i][2] && board[i][0] != TileStateEnum.empty) {
-  //       widget.onCelebrationStateChanged(true);
-  //       return board[i][0];
-  //     }
-  //     if (board[0][i] == board[1][i] && board[1][i] == board[2][i] && board[0][i] != TileStateEnum.empty) {
-  //       widget.onCelebrationStateChanged(true);
-  //       return board[0][i];
-  //     }
-  //   }
-  //   if (board[0][0] == board[1][1] && board[1][1] == board[2][2] && board[0][0] != TileStateEnum.empty) {
-  //     widget.onCelebrationStateChanged(true);
-  //     return board[0][0];
-  //   }
-  //   if (board[2][0] == board[1][1] && board[1][1] == board[0][2] && board[2][0] != TileStateEnum.empty) {
-  //     widget.onCelebrationStateChanged(true);
-  //     return board[2][0];
-  //   }
-  //   return TileStateEnum.empty;
-  // }
-
   @override
   Widget build(BuildContext context) {
     audioController = context.read<AudioController>();
+    final adsControllerAvailable = context.watch<AdsController?>() != null;
+    final adsRemoved =
+        context.watch<InAppPurchaseController?>()?.adRemoval.active ?? false;
 
     final Map<TileStateEnum, Icon?> tileIcons = {
       TileStateEnum.empty: null,
@@ -86,82 +57,96 @@ class _TicTacToeGameState extends State<TicTacToeGame> {
     };
 
     return Scaffold(
-      body: Column(
-        children: [
-          Text(
-            '${AppLocalizations.of(context).translate('player')}:',
-            style: TextStyle(
-              fontFamily: 'Pacifico',
-              fontSize: 30,
-              height: 1,
-            ),
-          ),
-          Center(
-            child: tileIcons[gameState.currentPlayer],
-          ),
-          Expanded(
-            child: Container(
-              constraints: BoxConstraints(
-                maxWidth: MediaQuery.of(context).size.width * 0.9,
-                maxHeight: MediaQuery.of(context).size.height * 0.9,
+      body: ResponsiveScreen(
+        squarishMainArea: Column(
+          children: [
+            Text(
+              '${AppLocalizations.of(context).translate('player')}:',
+              style: TextStyle(
+                fontFamily: 'Pacifico',
+                fontSize: 30,
+                height: 1,
               ),
-              child: GridView.builder(
-                shrinkWrap: true,
-                itemCount: 9,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
+            ),
+            Center(
+              child: tileIcons[gameState.currentPlayer],
+            ),
+            Expanded(
+              child: Container(
+                constraints: BoxConstraints(
+                  maxWidth: MediaQuery.of(context).size.width * 0.9,
+                  maxHeight: MediaQuery.of(context).size.height * 0.9,
                 ),
-                padding: EdgeInsets.all(8.0),
-                physics: NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) {
-                  int row = (index / 3).floor();
-                  int col = index % 3;
-                  return GestureDetector(
-                    onTap: () {
-                      gameState.playAt(row, col);
-                      setState(() {
-                        board = gameState.board;
-                      });
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black),
-                      ),
+                child: GridView.builder(
+                  shrinkWrap: true,
+                  itemCount: 9,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                  ),
+                  padding: EdgeInsets.all(8.0),
+                  physics: NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    int row = (index / 3).floor();
+                    int col = index % 3;
+                    return GestureDetector(
+                      onTap: () {
+                        gameState.playAt(row, col);
+                        setState(() {
+                          board = gameState.board;
+                        });
+                      },
                       child: Container(
                         decoration: BoxDecoration(
-                          color: Colors.grey[200],
-                          border: Border.all(
-                            color: Colors.grey[400]!,
+                          border: Border.all(color: Colors.black),
+                        ),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.grey[200],
+                            border: Border.all(
+                              color: Colors.grey[400]!,
+                            ),
+                          ),
+                          child: Center(
+                            child: tileIcons[board[row][col]],
                           ),
                         ),
-                        child: Center(
-                          child: tileIcons[board[row][col]],
-                        ),
                       ),
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               ),
             ),
-          ),
-          if (gameState.getWinner() != TileStateEnum.empty)
-            Column(
-              children: [
-                Text(
-                  '${AppLocalizations.of(context).translate('winner')}:',
-                  style: TextStyle(
-                    fontFamily: 'Pacifico',
-                    fontSize: 30,
-                    height: 1,
+            if (gameState.getWinner() != TileStateEnum.empty)
+              Column(
+                children: [
+                  Text(
+                    '${AppLocalizations.of(context).translate('winner')}:',
+                    style: TextStyle(
+                      fontFamily: 'Pacifico',
+                      fontSize: 30,
+                      height: 1,
+                    ),
                   ),
-                ),
-                Icon(
-                  tileIcons[gameState.getWinner()]?.icon,
-                  size: 60,
-                ),
-              ],
+                  Icon(
+                    tileIcons[gameState.getWinner()]?.icon,
+                    size: 60,
+                  ),
+                ],
+              ),
+            if (adsControllerAvailable && !adsRemoved)
+            const Expanded(
+              child: Center(
+                child: BannerAdWidget(),
+              ),
             ),
-        ],
+          ],
+        ),
+        rectangularMenuArea: FilledButton(
+          onPressed: () {
+            GoRouter.of(context).go('/');
+          },
+          child: Text(AppLocalizations.of(context).translate('back')),
+        ),
       ),
     );
   }
