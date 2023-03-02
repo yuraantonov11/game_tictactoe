@@ -1,21 +1,17 @@
-// Copyright 2022, the Flutter project authors. Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
+import 'dart:io';
 
-// Uncomment the following lines when enabling Firebase Crashlytics
-// import 'dart:io';
-// import 'package:firebase_core/firebase_core.dart';
-// import 'firebase_options.dart';
-
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
+import 'firebase_options.dart';
 import 'src/ads/ads_controller.dart';
 import 'src/app_lifecycle/app_lifecycle.dart';
 import 'src/audio/audio_controller.dart';
@@ -46,17 +42,17 @@ Future<void> main() async {
   // See the 'Crashlytics' section of the main README.md file for details.
 
   FirebaseCrashlytics? crashlytics;
-  // if (!kIsWeb && (Platform.isIOS || Platform.isAndroid)) {
-  //   try {
-  //     WidgetsFlutterBinding.ensureInitialized();
-  //     await Firebase.initializeApp(
-  //       options: DefaultFirebaseOptions.currentPlatform,
-  //     );
-  //     crashlytics = FirebaseCrashlytics.instance;
-  //   } catch (e) {
-  //     debugPrint("Firebase couldn't be initialized: $e");
-  //   }
-  // }
+  if (!kIsWeb && (Platform.isIOS || Platform.isAndroid)) {
+    try {
+      WidgetsFlutterBinding.ensureInitialized();
+      await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
+      );
+      crashlytics = FirebaseCrashlytics.instance;
+    } catch (e) {
+      debugPrint("Firebase couldn't be initialized: $e");
+    }
+  }
 
   await guardWithCrashlytics(
     guardedMain,
@@ -87,20 +83,20 @@ void guardedMain() {
   //       Read the README for more info on each integration.
 
   AdsController? adsController;
-  // if (!kIsWeb && (Platform.isIOS || Platform.isAndroid)) {
-  //   /// Prepare the google_mobile_ads plugin so that the first ad loads
-  //   /// faster. This can be done later or with a delay if startup
-  //   /// experience suffers.
-  //   adsController = AdsController(MobileAds.instance);
-  //   adsController.initialize();
-  // }
+  if (!kIsWeb && (Platform.isIOS || Platform.isAndroid)) {
+    /// Prepare the google_mobile_ads plugin so that the first ad loads
+    /// faster. This can be done later or with a delay if startup
+    /// experience suffers.
+    adsController = AdsController(MobileAds.instance);
+    adsController.initialize();
+  }
 
   GamesServicesController? gamesServicesController;
-  // if (!kIsWeb && (Platform.isIOS || Platform.isAndroid)) {
-  //   gamesServicesController = GamesServicesController()
-  //     // Attempt to log the player in.
-  //     ..initialize();
-  // }
+  if (!kIsWeb && (Platform.isIOS || Platform.isAndroid)) {
+    gamesServicesController = GamesServicesController()
+      // Attempt to log the player in.
+      ..initialize();
+  }
 
   InAppPurchaseController? inAppPurchaseController;
   // if (!kIsWeb && (Platform.isIOS || Platform.isAndroid)) {
