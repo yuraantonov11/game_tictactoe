@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 import 'package:ticktacktoe/src/game_internals/game_state.dart';
 
@@ -59,6 +60,7 @@ class _TicTacToeGameState extends State<TicTacToeGame> {
     return Scaffold(
       body: ResponsiveScreen(
         squarishMainArea: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Text(
               '${AppLocalizations.of(context).translate('player')}:',
@@ -134,16 +136,16 @@ class _TicTacToeGameState extends State<TicTacToeGame> {
                 ],
               ),
             if (adsControllerAvailable && !adsRemoved)
-            const Expanded(
-              child: Center(
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: 100,
                 child: BannerAdWidget(),
               ),
-            ),
           ],
         ),
         rectangularMenuArea: FilledButton(
           onPressed: () {
-            GoRouter.of(context).go('/');
+            GoRouter.of(context).go('/play');
           },
           child: Text(AppLocalizations.of(context).translate('back')),
         ),

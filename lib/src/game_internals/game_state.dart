@@ -8,6 +8,7 @@ import '../play_session/tile_state_enum.dart';
 class GameState extends ChangeNotifier {
   final VoidCallback onGameOver;
   late List<List<TileStateEnum>> board;
+  int movesPlayed = 0;
 
   TileStateEnum getWinner() {
     return _checkWinner();
@@ -24,18 +25,47 @@ class GameState extends ChangeNotifier {
 
   TileStateEnum get currentPlayer => _currentPlayer;
 
-  void playAt(int row, int col) {
-    if (board[row][col] == TileStateEnum.empty) {
-      board[row][col] = _currentPlayer;
-      if (_currentPlayer == TileStateEnum.cross) {
-        _currentPlayer = TileStateEnum.circle;
-      } else {
-        _currentPlayer = TileStateEnum.cross;
+  void checkEndGame() {
+    movesPlayed++;
+
+    // перевіряємо, чи всі клітинки заповнені
+    bool isBoardFull = true;
+    for (int row = 0; row < 3; row++) {
+      for (int col = 0; col < 3; col++) {
+        if (board[row][col] == TileStateEnum.empty) {
+          isBoardFull = false;
+          break;
+        }
       }
-      if (_checkWinner() != TileStateEnum.empty) {
-        onGameOver();
+      if (!isBoardFull) {
+        break;
       }
     }
+
+    // якщо всі клітинки заповнені і ніхто не переміг, то гра закінчується в нічию
+    if (isBoardFull && getWinner() == TileStateEnum.empty) {
+      // закінчуємо гру
+      onGameOver();
+    }
+  }
+
+  void playAt(int row, int col) {
+    if (board[row][col] != TileStateEnum.empty) {
+      return;
+    }
+
+    board[row][col] = currentPlayer;
+
+    if (currentPlayer == TileStateEnum.cross) {
+      // audioController.playCrossSound();
+      _currentPlayer = TileStateEnum.circle;
+    } else {
+      // audioController.playCircleSound();
+      _currentPlayer = TileStateEnum.cross;
+    }
+
+    checkEndGame(); // перевіряємо кінець гри
+
     notifyListeners();
   }
 
