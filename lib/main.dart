@@ -10,6 +10,7 @@ import 'package:go_router/go_router.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
+import 'package:ticktacktoe/src/win_game/draw_game_screen.dart';
 
 import 'firebase_options.dart';
 import 'src/ads/ads_controller.dart';
@@ -162,6 +163,17 @@ class MyApp extends StatelessWidget {
                         color: context.watch<Palette>().backgroundPlaySession,
                       );
                     },
+                  ),
+                  GoRoute(
+                    path: 'draw',
+                    pageBuilder: (context, state) {
+                      return buildMyTransition<void>(
+                        child: DrawGameScreen(
+                          key: const Key('draw'),
+                        ),
+                        color: context.watch<Palette>().backgroundPlaySession,
+                      );
+                    },
                   )
                 ]),
             GoRoute(
@@ -238,7 +250,8 @@ class MyApp extends StatelessWidget {
           final palette = context.watch<Palette>();
 
           return MaterialApp.router(
-            title: 'Flutter Demo',
+            title: 'Tic Tac Toe',
+            onGenerateTitle: (context) => AppLocalizations.of(context).translate('app_title'),
             theme: ThemeData.from(
               colorScheme: ColorScheme.fromSeed(
                 seedColor: palette.darkPen,

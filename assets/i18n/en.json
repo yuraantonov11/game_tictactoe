@@ -21,5 +21,8 @@
   "you_won": "You won",
   "score": "Score",
   "time": "Time",
-  "game_type": "Select Game Type"
+  "game_type": "Select Game Type",
+  "game_type_vs_player": "vs Player",
+  "game_type_vs_computer": "vs Computer",
+  "game_type_online": "Online"
 }

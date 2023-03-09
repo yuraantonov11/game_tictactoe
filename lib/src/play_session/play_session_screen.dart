@@ -94,7 +94,38 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
 
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 
-  Future<void> _playerWon() async {
+  Future<void> _playerWon(bool isDraw) async {
+    if(isDraw){
+      _log.info('Level draw!');
+      // await showDialog(
+      //   context: context,
+      //   builder: (context) {
+      //     return AlertDialog(
+      //       title: Text('Гра закінчилася в нічию'),
+      //       content: Text('Нічия!'),
+      //       actions: <Widget>[
+      //         TextButton(
+      //           child: Text('Рестарт'),
+      //           onPressed: () {
+      //             Navigator.of(context).pop();
+      //             gameState.reset();
+      //           },
+      //         ),
+      //         TextButton(
+      //           child: Text('Реклама'),
+      //           onPressed: () {
+      //             // додати код для показу реклами
+      //             // наприклад, викликати метод showAd()
+      //             Navigator.of(context).pop();
+      //           },
+      //         ),
+      //       ],
+      //     );
+      //   },
+      // );
+      GoRouter.of(context).go('/play/draw');
+      return;
+    }
     _log.info('Level ${widget.level.number} won');
 
     final score = Score(

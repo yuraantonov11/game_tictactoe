@@ -1,11 +1,8 @@
-// Copyright 2022, the Flutter project authors. Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
-
-const gameLevels = [
+List<GameLevel> gameLevels = [
   GameLevel(
     number: 1,
     difficulty: 5,
+    title: 'game_type_vs_player',
     // TODO: When ready, change these achievement IDs.
     // You configure this in App Store Connect.
     achievementIdIOS: 'first_win',
@@ -14,20 +11,24 @@ const gameLevels = [
   ),
   GameLevel(
     number: 2,
+    title: 'game_type_vs_computer',
     difficulty: 42,
   ),
   GameLevel(
     number: 3,
+    title: 'game_type_online',
     difficulty: 100,
     achievementIdIOS: 'finished',
     achievementIdAndroid: 'CdfIhE96aspNWLGSQg',
   ),
-];
+].cast<GameLevel>();
 
 class GameLevel {
   final int number;
 
   final int difficulty;
+
+  final String title;
 
   /// The achievement to unlock when the level is finished, if any.
   final String? achievementIdIOS;
@@ -39,6 +40,7 @@ class GameLevel {
   const GameLevel({
     required this.number,
     required this.difficulty,
+    required this.title,
     this.achievementIdIOS,
     this.achievementIdAndroid,
   }) : assert(

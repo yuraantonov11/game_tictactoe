@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 import 'package:ticktacktoe/src/game_internals/game_state.dart';
 
 import '../ads/ads_controller.dart';
 import '../ads/banner_ad_widget.dart';
 import '../audio/audio_controller.dart';
-// import '../audio/sounds.dart';
 import '../in_app_purchase/in_app_purchase.dart';
 import '../play_session/app_localizations.dart';
 import '../play_session/tile_state_enum.dart';
@@ -16,7 +14,7 @@ import '../style/responsive_screen.dart';
 class TicTacToeGame extends StatefulWidget {
   final bool playLocal;
   final ValueChanged<bool> onCelebrationStateChanged;
-  final VoidCallback onGameOver;
+  final Future<void> Function(bool) onGameOver;
 
   const TicTacToeGame({
     Key? key,

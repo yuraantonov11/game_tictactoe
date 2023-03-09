@@ -1,21 +1,22 @@
+// Copyright 2022, the Flutter project authors. Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../ads/ads_controller.dart';
 import '../ads/banner_ad_widget.dart';
-import '../games_services/score.dart';
 import '../in_app_purchase/in_app_purchase.dart';
 import '../play_session/app_localizations.dart';
 import '../style/palette.dart';
 import '../style/responsive_screen.dart';
 
-class WinGameScreen extends StatelessWidget {
-  final Score score;
+class DrawGameScreen extends StatelessWidget {
 
-  const WinGameScreen({
+  const DrawGameScreen({
     super.key,
-    required this.score,
   });
 
   @override
@@ -43,17 +44,8 @@ class WinGameScreen extends StatelessWidget {
             gap,
             Center(
               child: Text(
-                '${AppLocalizations.of(context).translate('you_won')}!',
+                '${AppLocalizations.of(context).translate('game_draw')}!',
                 style: TextStyle(fontFamily: 'Pacifico', fontSize: 50),
-              ),
-            ),
-            gap,
-            Center(
-              child: Text(
-                '${AppLocalizations.of(context).translate('score')}: ${score.score}\n'
-                '${AppLocalizations.of(context).translate('time')}: ${score.formattedTime}',
-                style: const TextStyle(
-                    fontFamily: 'Pacifico', fontSize: 20),
               ),
             ),
           ],

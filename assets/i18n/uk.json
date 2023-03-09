@@ -21,5 +21,8 @@
   "you_won": "Ви виграли",
   "score": "Очки",
   "time": "Час",
-  "game_type": "Виберіть тип гри"
+  "game_type": "Виберіть тип гри",
+  "game_type_vs_player": "Проти іншого Гравця",
+  "game_type_vs_computer": "Проти комп'ютера",
+  "game_type_online": "Гра онлайн"
 }

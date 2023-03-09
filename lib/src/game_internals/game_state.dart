@@ -6,7 +6,7 @@ import '../play_session/tile_state_enum.dart';
 /// Tracks the state of the game board, the current player, and calls
 /// `onGameOver` when the game is over.
 class GameState extends ChangeNotifier {
-  final VoidCallback onGameOver;
+  final Future<void> Function(bool) onGameOver;
   late List<List<TileStateEnum>> board;
   int movesPlayed = 0;
 
@@ -42,10 +42,16 @@ class GameState extends ChangeNotifier {
       }
     }
 
+    // перевіряємо, чи є переможець
+    TileStateEnum winner = getWinner();
+    bool hasWinner = winner != TileStateEnum.empty && winner != TileStateEnum.none;
+
+    if(hasWinner){
+      onGameOver(false);
+    }
     // якщо всі клітинки заповнені і ніхто не переміг, то гра закінчується в нічию
-    if (isBoardFull && getWinner() == TileStateEnum.empty) {
-      // закінчуємо гру
-      onGameOver();
+    if (isBoardFull && !hasWinner) {
+      onGameOver(true);
     }
   }
 
