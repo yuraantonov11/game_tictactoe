@@ -1,5 +1,5 @@
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SoundManager {
   bool _soundEnabled = true;
@@ -33,7 +33,7 @@ class SoundManager {
   }
 
   // Add the toggleSound method
-  void toggleSound() async {
+  Future<void> toggleSound() async {
     _soundEnabled = !_soundEnabled;
     await saveSoundEnabledState(_soundEnabled);
   }

@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 import '../audio/audio_controller.dart';
 import '../audio/sounds.dart';
 import '../play_session/app_localizations.dart';
-import '../player_progress/player_progress.dart';
+// import '../player_progress/player_progress.dart';
 import '../style/palette.dart';
 import '../style/responsive_screen.dart';
 import 'levels.dart';

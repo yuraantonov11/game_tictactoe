@@ -6,8 +6,7 @@ class TileWidget extends StatelessWidget {
   final Tile tile;
   final VoidCallback onPressed;
 
-  TileWidget({Key? key, required this.tile, required this.onPressed})
-      : super(key: key);
+  TileWidget({super.key, required this.tile, required this.onPressed});
 
   final Map<TileStateEnum, Icon?> tileIcons = {
     TileStateEnum.empty: null,

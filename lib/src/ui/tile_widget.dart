@@ -4,7 +4,7 @@ class TileWidget extends StatelessWidget {
   final String tile;
   final VoidCallback onPressed;
 
-  const TileWidget({required this.tile, required this.onPressed});
+  const TileWidget({super.key, required this.tile, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {

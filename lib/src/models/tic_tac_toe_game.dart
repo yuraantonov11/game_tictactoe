@@ -17,11 +17,11 @@ class TicTacToeGame extends StatefulWidget {
   final Future<void> Function(bool) onGameOver;
 
   const TicTacToeGame({
-    Key? key,
+    super.key,
     required this.playLocal,
     required this.onCelebrationStateChanged,
     required this.onGameOver,
-  }) : super(key: key);
+  });
 
   @override
   _TicTacToeGameState createState() => _TicTacToeGameState();
@@ -71,50 +71,57 @@ class _TicTacToeGameState extends State<TicTacToeGame> {
             Center(
               child: tileIcons[gameState.currentPlayer],
             ),
-            Expanded(
-              child: Container(
-                constraints: BoxConstraints(
-                  maxWidth: MediaQuery.of(context).size.width * 0.9,
-                  maxHeight: MediaQuery.of(context).size.height * 0.9,
-                ),
-                child: GridView.builder(
-                  shrinkWrap: true,
-                  itemCount: 9,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
+            LayoutBuilder(
+              builder: (context, constraints) {
+                double windowWidth = MediaQuery.of(context).size.width;
+                double windowHeight = MediaQuery.of(context).size.height;
+                double boardSize = windowHeight < windowWidth
+                    ? windowHeight * .83
+                    : windowWidth * .67;
+                return Container(
+                  constraints: BoxConstraints(
+                    maxWidth: boardSize,
+                    maxHeight: boardSize,
                   ),
-                  padding: EdgeInsets.all(8.0),
-                  physics: NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    int row = (index / 3).floor();
-                    int col = index % 3;
-                    return GestureDetector(
-                      onTap: () {
-                        gameState.playAt(row, col);
-                        setState(() {
-                          board = gameState.board;
-                        });
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black),
-                        ),
+                  child: GridView.builder(
+                    shrinkWrap: true,
+                    itemCount: 9,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3,
+                    ),
+                    padding: EdgeInsets.all(8.0),
+                    physics: NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      int row = (index / 3).floor();
+                      int col = index % 3;
+                      return GestureDetector(
+                        onTap: () {
+                          gameState.playAt(row, col);
+                          setState(() {
+                            board = gameState.board;
+                          });
+                        },
                         child: Container(
                           decoration: BoxDecoration(
-                            color: Colors.grey[200],
-                            border: Border.all(
-                              color: Colors.grey[400]!,
+                            border: Border.all(color: Colors.black),
+                          ),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.grey[200],
+                              border: Border.all(
+                                color: Colors.grey[400]!,
+                              ),
+                            ),
+                            child: Center(
+                              child: tileIcons[board[row][col]],
                             ),
                           ),
-                          child: Center(
-                            child: tileIcons[board[row][col]],
-                          ),
                         ),
-                      ),
-                    );
-                  },
-                ),
-              ),
+                      );
+                    },
+                  ),
+                );
+              },
             ),
             if (gameState.getWinner() != TileStateEnum.empty)
               Column(
@@ -134,7 +141,7 @@ class _TicTacToeGameState extends State<TicTacToeGame> {
                 ],
               ),
             if (adsControllerAvailable && !adsRemoved)
-              Container(
+              SizedBox(
                 width: MediaQuery.of(context).size.width,
                 height: 100,
                 child: BannerAdWidget(),

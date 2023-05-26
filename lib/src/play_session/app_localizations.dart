@@ -19,14 +19,16 @@ class AppLocalizations {
   Future<bool> load() async {
     String jsonString = await rootBundle.loadString('assets/i18n/${locale.languageCode}.json');
 
-    if (jsonString == null || jsonString.isEmpty) {
+    if (jsonString.isEmpty) {
       // handle null or empty JSON string
       return false;
     }
 
     Map<String, dynamic> jsonMap = json.decode(jsonString) as Map<String, dynamic>;
 
-    if (jsonMap == null) {
+
+//Check if the jsonMap is empty before handling the invalid JSON
+if (jsonMap.isEmpty) {
       // handle invalid JSON
       return false;
     }
