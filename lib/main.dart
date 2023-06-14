@@ -137,7 +137,7 @@ class MyApp extends StatelessWidget {
                   GoRoute(
                     path: 'session/:level',
                     pageBuilder: (context, state) {
-                      final levelNumber = int.parse(state.params['level']!);
+                      final levelNumber = int.parse(state.pathParameters['level']!);
                       final level = gameLevels
                           .singleWhere((e) => e.number == levelNumber);
                       return buildMyTransition<void>(
