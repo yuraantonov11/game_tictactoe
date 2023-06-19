@@ -72,7 +72,7 @@ android {
         }
     }
     buildToolsVersion '33.0.2'
-    namespace 'com.example.game_tictactoe'
+    namespace 'com.antonov.ticktacktoe'
 }
 
 flutter {

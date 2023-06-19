@@ -25,8 +25,8 @@ dependencies:
   # that references the dependency.
   firebase_core: ^2.7.0  # Needed for Crashlytics below
   firebase_crashlytics: ^3.0.15  # Error reporting
-  games_services: ^3.0.0  # Achievements and leaderboards
-  google_mobile_ads: ^3.0.0  # Ads
+  games_services: ^3.0.1  # Achievements and leaderboards
+  google_mobile_ads: ^2.4.0  # Ads
   in_app_purchase: ^3.0.1  # In-app purchases
 
   flutter_localizations:
@@ -49,6 +49,30 @@ flutter:
     - assets/images/
     - assets/music/
     - assets/sfx/
+    - android/app/src/main/res/mipmap-mdpi/
+    - android/app/src/main/res/drawable-v21/
+    - android/app/src/main/res/mipmap-xxhdpi/
+    - android/app/src/main/res/values/
+    - android/app/src/main/res/drawable/
+    - android/app/release/
+    - android/app/src/main/java/io/
+    - android/app/src/main/java/io/flutter/
+    - android/app/src/main/java/io/flutter/plugins/
+    - android/app/
+    - android/app/src/main/kotlin/com/
+    - android/app/src/
+    - android/app/src/main/kotlin/com/example/
+    - android/app/src/main/
+    - android/app/src/main/kotlin/com/example/game_template/
+    - android/app/src/main/res/
+    - android/app/src/main/res/mipmap-hdpi/
+    - android/app/src/main/res/mipmap-xxxhdpi/
+    - android/app/src/debug/
+    - android/app/src/profile/
+    - android/app/src/main/res/mipmap-xhdpi/
+    - android/app/src/main/java/
+    - android/app/src/main/kotlin/
+    - android/app/src/main/res/values-night/
 
   fonts:
     - family: Permanent Marker
